@@ -412,7 +412,7 @@ if (NOT MSVC)
 		include(CheckCXXCompilerFlag)
 		check_cxx_compiler_flag("-Wa,-mbig-obj" HAS_BIG_OBJ_FLAG)
 		if (HAS_BIG_OBJ_FLAG) # "-Wa,-mbig-obj" is not supported by gcc on Linux
-			target_compile_options (${TARGET} PRIVATE
+			target_compile_options (juce PRIVATE
 					"-Wa,-mbig-obj"
 			)
 		endif ()
