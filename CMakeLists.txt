@@ -403,7 +403,7 @@ endif (JUCE_DISABLE_LEAK_DETECTOR)
 # Compile Options
 # ============================
 if (NOT MSVC)
-	target_compile_options (juce PRIVATE
+	target_compile_options (juce PUBLIC
 			-pthread
 			-fvisibility=hidden
 			-fvisibility-inlines-hidden
@@ -412,22 +412,22 @@ if (NOT MSVC)
 		include(CheckCXXCompilerFlag)
 		check_cxx_compiler_flag("-Wa,-mbig-obj" HAS_BIG_OBJ_FLAG)
 		if (HAS_BIG_OBJ_FLAG) # "-Wa,-mbig-obj" is not supported by gcc on Linux
-			target_compile_options (juce PRIVATE
+			target_compile_options (juce PUBLIC
 					"-Wa,-mbig-obj"
 			)
 		endif ()
 	endif ()
 	if (NOT (("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang") AND WIN32))
-		target_compile_options (juce PRIVATE -fPIC)
+		target_compile_options (juce PUBLIC -fPIC)
 	endif ()
-	target_link_options (juce PRIVATE
+	target_link_options (juce PUBLIC
 			-shared
 			-fvisibility=hidden
 			-fvisibility-inlines-hidden
 	)
 
 	if (WIN32)
-		target_link_libraries (juce PRIVATE
+		target_link_libraries (juce PUBLIC
 			-m64
 			-lcomctl32
 			-lwinmm
@@ -443,10 +443,10 @@ if (NOT MSVC)
 			-ldxgi
 		)
 		if (NOT ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang"))
-			target_link_libraries (juce PRIVATE -s)
+			target_link_libraries (juce PUBLIC -s)
 		endif ()
 	elseif (UNIX AND NOT APPLE)
-		target_link_libraries (juce PRIVATE
+		target_link_libraries (juce PUBLIC
 			${RT}
 			${DL}
 			${PTHREAD}
@@ -456,7 +456,7 @@ if (NOT MSVC)
 			${LIBCURL_LIBRARIES}
 		)
 	elseif (APPLE)
-		target_link_libraries (juce PRIVATE
+		target_link_libraries (juce PUBLIC
 			"-framework Accelerate"
 			"-framework AudioToolbox"
 			"-framework AVFoundation"
@@ -481,7 +481,7 @@ else (NOT MSVC)
 	)
 
 	if (CMAKE_BUILD_TYPE STREQUAL Debug)
-		target_compile_options (juce PRIVATE
+		target_compile_options (juce PUBLIC
 			/permissive-#符合模式:是
 			/GS#安全检查:启用安全检查
 			/Zc:wchar_t#将WChar_t视为内置类型:是
@@ -493,7 +493,7 @@ else (NOT MSVC)
 			/nologo#取消显示启动版权标志:是
 			/bigobj#较大生成对象:是
 		)
-		target_link_options (juce PRIVATE
+		target_link_options (juce PUBLIC
 			/MANIFEST#生成清单:是
 			/NXCOMPAT#数据执行保护(DEP):是
 			/DYNAMICBASE#随机基址:是
@@ -503,7 +503,7 @@ else (NOT MSVC)
 			/NOLOGO#取消显示启动版权标志:是
 		)
 	else (CMAKE_BUILD_TYPE STREQUAL Debug)
-		target_compile_options (juce PRIVATE
+		target_compile_options (juce PUBLIC
 			/permissive-#符合模式:是
 			/GS#安全检查:启用安全检查
 			/GL#全程序优化:是
@@ -518,7 +518,7 @@ else (NOT MSVC)
 			/nologo#取消显示启动版权标志:是
 			/bigobj#较大生成对象:是
 		)
-		target_link_options (juce PRIVATE
+		target_link_options (juce PUBLIC
 			/MANIFEST#生成清单:是
 			/LTCG:incremental#链接时间代码生成:使用快速链接时间代码生成
 			/NXCOMPAT#数据执行保护(DEP):是
